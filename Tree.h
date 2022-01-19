@@ -69,9 +69,16 @@ void BinTree<T>::updateHeightAbove(BinNodePosi(T) x){
 template <typename T> 
 BinNodePosi(T) BinTree<T>::insertAsRC(BinNodePosi(T) x,T const& e){
   _size++;x->insertAsRC(e);
-  updateHeightAbove(x);
+  updateHeightAbove(x);//更新高度
   return x->rChild;
 }
+
+/*
+=================================================================
+先序遍历
+=================================================================
+*/
+
 
 
 #endif

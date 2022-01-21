@@ -78,7 +78,43 @@ BinNodePosi(T) BinTree<T>::insertAsRC(BinNodePosi(T) x,T const& e){
 先序遍历
 =================================================================
 */
+template <typename T,typename VST>
+void traverse(BinNodePosi(T) x,VST& visit){
+  if(!x)return ;
+  visit(x->data);
+  traverse(x->lchild, visit);//tail recursion
+  traverse(x->rChild，visit);
+}
 
+//改进
+//遍历都是先根-先右后左
+template <typename T,typename VST>
+void travPre_I1(BinNodePosi(T) x,VST& visit){
+  Stack <BinNodePosi(T)> S;
+  if(x) S.push(x);
+  while (!S.empty())
+  {
+    x=S.pop();
+    visit(x->data);
+    if(HasRChild(*x))S.push(x->rChild);//右孩子先入后出
+    if(HasLChild(*x))S.push(x->lChild);//左孩子后入先出
+  }
+}
+
+//改进
+template <typename T,typename VST>
+static void visitAlongLeftBranch(
+  BinNodePosi(T) x,
+  VST& visit,
+  Stack <BinNodePosi(T)>& S)
+  {
+  while (x)
+  {
+    visit(x->data);
+    S.push(x->rChild);
+    x=x->lChild;
+  }
+  }
 
 
 #endif

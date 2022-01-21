@@ -140,6 +140,9 @@ void traverse(BinNodePosi(T) x,VST& visit){
 }
 
 //iteration version
+/*
+everytime meet left subtree ,右边开始进栈，直到没有右节点，开始出栈
+*/
 template<typename T>
 static void goAlongLeftBranch(BinNodePosi(T) x,Stack <BinNodePosi(T)& >S){
   while (x)
@@ -160,6 +163,81 @@ void travIn_I1(BinNodePosi(T) x,V& visit){
     x=x->rChild;//accsee the right subtree
   }
 }
+
+/*
+=================================================================
+后序遍历
+先遍历子结点遍历根节点
+尽可能沿左出发，实在不得已才沿右边
+
+如今将递归转化为迭代形式更多的是根据空间复杂度的考量，但是幸运的是
+时间复杂度上也还可以
+
+使用分摊分析工具
+
+RPN与后序遍历有较强的相关性
+=================================================================
+*/
+template <typename T,typename VST>
+void traverse(BinNodePosi(T) x,VST& visit){
+  if(!x)return ;
+  traverse(x->lChild,visit);
+  traverse(x->rChild,visit);
+  visit(x->data);//访问根节点
+}
+
+template<typename T>
+static void gotoLeftmostLeaf(Stack <BinNodePosi(T)>& S){
+  while (BinNodePosi<T> x=S.top()))
+  {
+    if(HasLChild(*x)){
+      if(HasRChild(*x))S.push(x->rc);
+      S.push(x->lc);
+    }else
+      S.push(x->rc);
+  }
+  S.pop();
+}
+template<typename T,typename VST>
+void travPost_I(BinNodePosi<T> x,VST& visit){
+  Stack<BinNodePosi<T>> S;
+  if(x) S.push(x);
+  while (!S.empty())
+  {
+    if(S.top()!=x->parent)gotoLeftmostLeaf(S);
+    x=S.pop();
+    visit(x->data);
+  }
+  
+}
+
+/*
+=================================================================
+层次遍历
+左先右后
+=================================================================
+*/
+template<typename T,typename VST>
+void BinNode<T>::travLevel(VST& visit){
+  Queue<BinNodePosi(T)> Q;
+  Q.enqueue(this);
+  while (!Q.empty())
+  {
+    BinNodePosi(T) x=Q.dequeue();
+    visit(x->data);
+    if(HasLChild(*x))Q.enqueue(x->lChild);
+    if(HasRChild(*x))Q.enqueue(x->rChild);
+  }
+  
+}
+
+/*
+=================================================================
+Huffman树
+一种编码应用方式
+=================================================================
+*/
+
 
 
 #endif

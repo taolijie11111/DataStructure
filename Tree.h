@@ -101,12 +101,12 @@ void travPre_I1(BinNodePosi(T) x,VST& visit){
   }
 }
 
-//改进
+//改进 version 2
 template <typename T,typename VST>
 static void visitAlongLeftBranch(
   BinNodePosi(T) x,
   VST& visit,
-  Stack <BinNodePosi(T)>& S)
+  //Stack <BinNodePosi(T)>& S)
   {
   while (x)
   {
@@ -115,6 +115,16 @@ static void visitAlongLeftBranch(
     x=x->lChild;
   }
   }
-
+template<typename T,typename VST>
+void travPre I2(BinNodePosi(T) x,VST& visit){
+  Stack <BinNodePosi(T)》 S；
+  while (true)
+  {
+    visitAlongLeftBranch(x,visit,S);//访问子树x的左侧链，右子树入栈缓冲
+    if(S.empty())break;//栈空即退出
+    x=S.pop();//弹出下一子树的根
+  }
+  
+}
 
 #endif

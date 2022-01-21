@@ -1,5 +1,5 @@
-#ifndef __TREE__
-#define __TREE__
+#ifndef __BINTREE__
+#define __BINTREE__
 #include "Stack.h"
 /*
 =================================================================
@@ -140,7 +140,26 @@ void traverse(BinNodePosi(T) x,VST& visit){
 }
 
 //iteration version
-
+template<typename T>
+static void goAlongLeftBranch(BinNodePosi(T) x,Stack <BinNodePosi(T)& >S){
+  while (x)
+  {
+    S.push(x);
+    x=x->lChild;
+  }
+}
+template<typename T,typename V>
+void travIn_I1(BinNodePosi(T) x,V& visit){
+  Stack <BinNodePosi(T)> S;
+  while (ture)
+  {
+    goAlongLeftBranch(x,S);
+    if(S.empty())break;
+    x=S.pop();
+    visit(x->data);
+    x=x->rChild;//accsee the right subtree
+  }
+}
 
 
 #endif

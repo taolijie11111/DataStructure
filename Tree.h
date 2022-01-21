@@ -1,6 +1,6 @@
 #ifndef __TREE__
 #define __TREE__
-
+#include "Stack.h"
 /*
 =================================================================
 BinNode(二叉树)
@@ -102,29 +102,45 @@ void travPre_I1(BinNodePosi(T) x,VST& visit){
 }
 
 //改进 version 2
+//每当运算到一个节点，它便会先将节点的右节点推送到栈中，然后遍历左节点
 template <typename T,typename VST>
-static void visitAlongLeftBranch(
-  BinNodePosi(T) x,
-  VST& visit,
-  //Stack <BinNodePosi(T)>& S)
-  {
-  while (x)
-  {
-    visit(x->data);
-    S.push(x->rChild);
-    x=x->lChild;
-  }
-  }
+static void visitAlongLeftBranch(BinNodePosi(T) x,VST& visit,
+Stack <BinNodePosi(T)>& S)
+{
+while (x)
+{
+  visit(x->data);
+  S.push(x->rChild);
+  x=x->lChild;
+}
+}
+
 template<typename T,typename VST>
-void travPre I2(BinNodePosi(T) x,VST& visit){
-  Stack <BinNodePosi(T)》 S；
+void travPre_I2(BinNodePosi(T) x,VST& visit){
+  Stack <BinNodePosi(T)> S；
   while (true)
   {
     visitAlongLeftBranch(x,visit,S);//访问子树x的左侧链，右子树入栈缓冲
     if(S.empty())break;//栈空即退出
     x=S.pop();//弹出下一子树的根
   }
-  
 }
+
+/*
+=================================================================
+中序遍历
+=================================================================
+*/
+template <typename T,typename VST>
+void traverse(BinNodePosi(T) x,VST& visit){
+  if(!x)return ;
+  traverse(x->lChild,visit);
+  visit(x->data);//访问根节点
+  traverse(x->rChild,visit);
+}
+
+//iteration version
+
+
 
 #endif

@@ -33,10 +33,29 @@ virtual int inDegree(int)=0;
 virtual int outDegree(int)=0;
 virtual int firstNbr(int)=0;
 virtual int nextNbr(int,int)=0;
-
-
-
+virtual VStatus& status(int)=0;
+virtual int& dTime(int)=0;
+virtual int& fTime(int)=0;
+virtual int& parent(int)=0;
+virtual int& priority(int)=0;
+//边：这里约定，无向边均统一转化为方向互逆的一对有想向边，从而将无向图视为有向图的特例
+int e;
+virtual bool exisis(int,int)=0;
+virtual void insert(Te const&,int,int,int)=0;
+virtual Te remove(int,int)=0;
+virtual EType& type(int,int)=0;
+virtual Te& edge(int,int)=0;
+virtual int& weight(int,int)=0;
+//算法
+void bfs(int);
+void dfs(int);
+void bcc(int);
+Stack<Tv>* tSort(int);
+void prim(int);
+void dijkstra(int);//最短路径算法
+template <typename PU> void pfs(int,PU);//优先级搜索框架
 };
+
 
 
 

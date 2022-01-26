@@ -50,7 +50,7 @@ public:
   virtual int& parent(int i){return V[i].parent;}
   virtual int& priority(int i){return V[i].priority;}
 
-  virtual int insert(Tv const& Vertex){
+  virtual int insert(Tv const& Vertex){//insert top point
     for(int j=0;j<n;j++)E[j].insert(NULL);n++;
     E.insert(Vector<Edge<Te>*>(n,n,(Edge<Te>*)NULL));
     return V.insert(Vertex<Tv>(vertex));
@@ -63,12 +63,14 @@ public:
   virtual int& weight(int i,int j){return E[i][j]->weight;}
 
   virtual void insert(Te const& edge,int w,int i,int j){
-    if(exists(i.j))return;
+    if(exists(i.j))return;//ignore existed edge
     E[i][j]=new  Edge<Te>(edge,w);
-    e++;V[i].outDegree++;V[j].inDegree++;
+    e++;
+    V[i].outDegree++;
+    V[j].inDegree++;
   }
-  virtual Te remove(int i,int j){
-    Te eBak=edge(i,j);
+  virtual Te remove(int i,int j){//delete the information of exists(i,j)
+    Te eBak=edge(i,j);//
     delete E[i][j];
     E[i][j]=NULL;
     e--;
@@ -76,7 +78,6 @@ public:
     V[j].inDegree--;
     return eBak;
   }
-
 };
 
 #endif

@@ -47,7 +47,7 @@ virtual EType& type(int,int)=0;
 virtual Te& edge(int,int)=0;
 virtual int& weight(int,int)=0;
 //算法
-void bfs(int);
+void bfs(int);//
 void dfs(int);
 void bcc(int);
 Stack<Tv>* tSort(int);
@@ -56,7 +56,26 @@ void dijkstra(int);//最短路径算法
 template <typename PU> void pfs(int,PU);//优先级搜索框架
 };
 
-
+//BFS
+template <typename Tv,typename Te>
+void Graph<Tv,Te>::BFS(int v,int & clock){
+  Queue<int> Q;status(v)=DISCOVERED;
+  Q.enqueue(v);
+  while (!Q.empty())
+  {
+    int v=Q.dequeue();
+    dTime(v)=++clock;
+    for(int u=firstNbr(v);-1<u;u=nextNbr(v,u))
+      if(UNDISCOVERED==status(u)){
+        status(u)=DISCOVERED;
+        Q.enqueue(u);
+        status(v,u)=TREE;
+        parent(u)=v;
+      }else
+        status(v,u)=CROSS;
+    status(v)=VISITED;
+  }
+}
 
 
 #endif

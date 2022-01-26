@@ -1,7 +1,6 @@
 #ifndef __List__
 #define __List__
 
-
 //ListNode 模板类
 typedef int Rank;
 #define ListNodePosi(T) ListNode<T>* 

@@ -56,19 +56,19 @@ void dijkstra(int);//最短路径算法
 template <typename PU> void pfs(int,PU);//优先级搜索框架
 };
 
-//BFS
+//BFS 包含一个连通域
 template <typename Tv,typename Te>
 void Graph<Tv,Te>::BFS(int v,int & clock){
   Queue<int> Q;status(v)=DISCOVERED;
   Q.enqueue(v);
-  while (!Q.empty())
+  while (!Q.empty())//O(nxn)
   {
-    int v=Q.dequeue();
+    int v=Q.dequeue();//取出顶点
     dTime(v)=++clock;
-    for(int u=firstNbr(v);-1<u;u=nextNbr(v,u))
+    for(int u=firstNbr(v);-1<u;u=nextNbr(v,u))//O(e):只有有限个边才能进去 
       if(UNDISCOVERED==status(u)){
         status(u)=DISCOVERED;
-        Q.enqueue(u);
+        Q.enqueue(u);//发现该顶点
         status(v,u)=TREE;
         parent(u)=v;
       }else
@@ -76,6 +76,55 @@ void Graph<Tv,Te>::BFS(int v,int & clock){
     status(v)=VISITED;
   }
 }
+
+//bfs 当含有多个连通域时，需要进行一些改进
+template <typename Tv,typename Te>
+void Graph<Tv ,Te>::bfs(int s){
+  reset();int clock=0;int v=s;
+  do{
+    if(UNDISCOVERED==status(v))BFS(v,clock);
+  }while (s!=(v=(++v%n)));//只有当前的顶点只有通过if判断之后才会启动
+}
+
+//Depth first search 
+//有可达域，即从一个点可以达到的所有的点的区域
+//除此之外，还有一些该点达不到的地方，需要重新确定节点进行搜索
+template <typename Tv,typename Te>
+void Graph<Tv,Te>::DFS(int v,int& clock){
+  dTime(v)=++clock;
+  status(v)=DISCOVERED;
+  for(int u=firstNbr(v);-1<u;u=nextNbr(v,u))
+    switch (status(u))
+    {
+    case UNDISCOVERED://un discoverd 
+      status(v,u)=TREE;
+      parent(u)=v;
+      DFS(u,clock);
+      break;
+    case DISCOVERED://discoverd
+      status(v,u)BACKWARD;
+      break;
+    default:
+      status(v,u)=dTime(v)<dTime(u)?FORWARD:CROSS;break;
+    }
+  status(v)=VISITED;
+  fTime(v)=++clock;
+}
+
+//拓扑排序
+//将所有顶点拍成一个线性序列，使其次序与原图相容
+//这里面不能有环
+//必须要找到一个零入度的顶点：指没有的箭头指向他的哪个点
+//Begin with the end in mind
+
+//DFS外面要包一层，将点都找到
+//不一定要全部都弄，随便找一个点都可以在意料之中
+//率性
+
+
+
+
+
 
 
 #endif

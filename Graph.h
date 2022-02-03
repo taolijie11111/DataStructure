@@ -121,9 +121,27 @@ void Graph<Tv,Te>::DFS(int v,int& clock){
 //不一定要全部都弄，随便找一个点都可以在意料之中
 //率性
 
+//DFS
+#define hca(x) (fTime(x))//利用此处闲置的fTime
+template <typename Tv,typename Te>
+void Graph(Tv,Te)::BCC(int v,int & clock,Stack<int>& S){
+  hca(v)=dTime(v)=++clock;
+  status(v)=DISCOVERED;
+  S.push(v);
+  for(int i=firstNbr(v);-1<u;u=nextNbr(v,u))
+    switch (status(u))
+    {
+    case /* constant-expression */:
+      /* code */
+      break;
+    
+    default:
+      break;
+    }
+    status(v)=VISITED;
+}
 
-
-
+#undef hca
 
 
 

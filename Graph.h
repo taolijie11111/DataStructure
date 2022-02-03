@@ -131,11 +131,20 @@ void Graph(Tv,Te)::BCC(int v,int & clock,Stack<int>& S){
   for(int i=firstNbr(v);-1<u;u=nextNbr(v,u))
     switch (status(u))
     {
-    case /* constant-expression */:
-      /* code */
+      //everytime meet hca we can judge it weather ansoter or not
+    case DISCOVERED:
+      type(v,u)=BACKWARD;
+      if(u!=parent(v))hca(v)=min(hca(v),dTime(u));
       break;
-    
-    default:
+    case UNDISCOVERED;
+      parent(u)=v;
+      type(v,u)=TREE;//拓展树边
+      BCC(u,clock,S);
+      if(hca(u)<dTime(v))hca(v)=min(hca(v),hca(u));
+      else while (u!=S.pop());
+      break; 
+    default://VISITED(digraphs only)
+      type(v,u)=dTime(v)<dTime(u)?FORWARD:CROSS;
       break;
     }
     status(v)=VISITED;
@@ -143,6 +152,25 @@ void Graph(Tv,Te)::BCC(int v,int & clock,Stack<int>& S){
 
 #undef hca
 
+
+//优先级搜索
+
+
+//Dijkstra算法
+g->pfs(0,DijktraPU<char,int>());
+template<typename Tv,typename Te>struct DijkPU
+{
+  virtual void operator()(Graph<Tv,Te>* g,int uk,int v){
+    if(UNDISCOVERED != g->status(v))return;
+    if(g->priority(v) > g->priority(uk)+g->weight(uk,v)){
+      g->priority(v)  = g->priority(uk)+g->weight(uk,v);
+      g->parent(v)    = uk;
+    }
+  }
+};
+
+//最小生成树MST
+ //同Dijkstra算法
 
 
 #endif

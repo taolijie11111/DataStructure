@@ -23,3 +23,7 @@ map/multimap的使用场景：比如ID号存储十万个用户，想要快速通
 关于，set是只能排列一个数据吗？
 如果是用指针来排列，那和map有什么区别呢？
 map为什么还需要加一个data呢？
+
+
+https://docs.microsoft.com/en-us/cpp/cpp/welcome-back-to-cpp-modern-cpp?redirectedfrom=MSDN&view=msvc-170
+

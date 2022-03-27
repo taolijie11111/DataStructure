@@ -29,9 +29,6 @@ shared_ptr<string> p4 = make_shared<string>(10,'9');
 shared_ptr<int> p5 = make_shared<int>();
 
 
-
-
-
 //vector
 vector<type> a;
 a[]
